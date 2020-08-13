@@ -195,3 +195,7 @@ HelloSayerLib instance docstring is:
 
 ------------------------------------------ Tests Complete ------------------------------------------
 ```
+
+### Notes
+
+Asked a Stack Overflow question [here](https://stackoverflow.com/questions/63401931/pybind-with-boost-dll-dual-use-dll).
