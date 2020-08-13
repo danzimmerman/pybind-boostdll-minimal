@@ -1,11 +1,94 @@
-// HelloSayerLibCppTest.cpp : This file contains the 'main' function. Program execution begins and ends there.
-//
+// HelloSayerLibCppTest.cpp : Testing HelloSayerLib DLL Load
 
 #include <iostream>
+#include <sstream>
 
-int main()
+#include <boost/dll/import.hpp>
+#include <boost/dll/library_info.hpp>
+#include <boost/function.hpp>
+
+#include <HelloSayerLib.h>
+
+int main(int argc, char* argv[])
 {
-    std::cout << "Hello World!\n";
+	std::string exePath = argv[0];
+
+	boost::filesystem::path libDir = boost::filesystem::path(exePath).parent_path();
+	std::cout << "\n*** boost::dll test HelloSayerLibCppTest.exe running from " << libDir << std::endl;
+
+	boost::filesystem::path libFile = libDir / "HelloSayerLib";
+
+	{
+		typedef std::shared_ptr<HelloSayer> hs_create_function_t();
+		boost::function<hs_create_function_t> hscreator;
+		
+        // === GET AND PRINT LIBRARY INFO ===
+		try 
+		{
+			std::cout << "\n*** Reading sections and symbols from shared library " << libFile << "\n"<< std::endl;
+			boost::dll::library_info libinfo(libDir / "HelloSayerLib.dll");
+			std::vector<std::string> sections = libinfo.sections();
+
+			for (auto& section : sections)
+			{
+				std::vector<std::string> exported_sections = libinfo.symbols(section);
+				if (exported_sections.size() > 0)
+				{
+					for (auto& sym : exported_sections)
+					{
+						std::cout << "\tFound symbol " << sym << " in section " << section << std::endl;
+					}
+				}
+				else
+				{
+					std::cout << "\tFound no symbols in section " << section << std::endl;
+				}
+
+			}
+		}
+		catch (std::exception& ex)
+		{
+			std::cerr << "\n*** ERROR! Getting library info threw:\n" << std::endl;
+			std::cerr << "\t\"" << ex.what() << "\"" << std::endl;
+			return EXIT_FAILURE;
+		}
+
+		// === NOW LOAD THE DLL AND TRY TO USE THE FUNCTION ===
+		try
+		{
+			std::string createFunctionSym = "CreateHelloSayer";
+			std::string libFileStr = libFile.generic_string();
+
+			std::cout << "\n*** Trying boost::dll::import_alias() to load " << createFunctionSym <<  " from " << libFileStr << std::endl;
+			hscreator = boost::dll::import_alias<hs_create_function_t>(
+				libFile,
+				createFunctionSym,
+				boost::dll::load_mode::append_decorations
+				);
+			std::cout << "\n*** Successfully loaded " << createFunctionSym << std::endl;
+		}
+		catch (std::exception& ex)
+		{
+			std::cerr << "\n*** ERROR! Library load attempt threw:\n" << std::endl;
+			std::cerr << "\t\"" << ex.what() << "\"" << std::endl;
+			return EXIT_FAILURE;
+		}
+
+		// === FINALLY USE THE LOADED DLL ===
+		try
+		{
+			std::cout << "\n*** Trying to use HelloSayer()" << std::endl;
+			std::shared_ptr<HelloSayer> hs = hscreator();
+			std::string msg = hs->sayHello();
+			std::cout << "\n*** HelloSayer instance hs->sayHello() said \n\t\"" << msg << "\"" << std::endl;
+		}
+		catch (std::exception& ex)
+		{
+			std::cerr << "\n*** ERROR! Using library threw:\n" << std::endl;
+			std::cerr << "\t\"" << ex.what() << "\"" << std::endl;
+		}
+
+	}
 }
 
 // Run program: Ctrl + F5 or Debug > Start Without Debugging menu

@@ -93,14 +93,14 @@
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>..\pybind11\include\;..\boost\dll\include\;..\boost\config\include\;$(USERPROFILE)\anaconda3\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\source;..\pybind11\include;..\..\..\..\external\boost_1_72_0;$(USERPROFILE)\anaconda3\include</AdditionalIncludeDirectories>
       <ForcedIncludeFiles>pch.h</ForcedIncludeFiles>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(USERPROFILE)\anaconda3\libs\;</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(USERPROFILE)\anaconda3\libs;..\..\..\..\external\boost_1_72_0\stage\lib;</AdditionalLibraryDirectories>
     </Link>
     <PostBuildEvent>
       <Command>copy /Y $(SolutionDir)$(Platform)\$(Configuration)\$(ProjectName).dll $(SolutionDir)python\$(ProjectName).pyd</Command>
@@ -157,7 +157,7 @@
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>..\pybind11\include\;..\boost\dll\include\;..\boost\config\include\;$(USERPROFILE)\anaconda3\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\source;..\pybind11\include;..\..\..\..\external\boost_1_72_0;$(USERPROFILE)\anaconda3\include</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <ForcedIncludeFiles>pch.h</ForcedIncludeFiles>
     </ClCompile>
@@ -166,14 +166,14 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(USERPROFILE)\anaconda3\libs\;</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(USERPROFILE)\anaconda3\libs;..\..\..\..\external\boost_1_72_0\stage\lib;</AdditionalLibraryDirectories>
     </Link>
     <PostBuildEvent>
       <Command>copy /Y $(SolutionDir)$(Platform)\$(Configuration)\$(ProjectName).dll $(SolutionDir)python\$(ProjectName).pyd</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="..\source\HelloSayer.h" />
+    <ClInclude Include="..\source\HelloSayerLib.h" />
     <ClInclude Include="pch.h" />
   </ItemGroup>
   <ItemGroup>

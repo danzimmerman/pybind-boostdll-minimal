@@ -1,11 +1,11 @@
 #include <iostream>
 #include <pybind11/pybind11.h>
 #include <pybind11/stl.h>
-#include <boost/dll/alias.hpp>
+#include <boost/dll/alias.hpp> // using system-level boost 1.7.2, in ..\..\..\..\external\boost_1_72_0. 
 
-#include "HelloSayer.h" // defines the interface of HelloSayer, consisting of a pure virtual sayHello()
+#include <HelloSayerLib.h> // defines the interface of HelloSayer, consisting of a pure virtual sayHello()
 
-#define EXPORT_PYTHON
+//#define EXPORT_PYTHON
 
 namespace py = pybind11;
 
