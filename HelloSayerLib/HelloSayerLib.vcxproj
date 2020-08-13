@@ -93,7 +93,7 @@
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>..\pybind11\include\;..\dll\include\;$(USERPROFILE)\anaconda3\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\pybind11\include\;..\boost\dll\include\;..\boost\config\include\;$(USERPROFILE)\anaconda3\include</AdditionalIncludeDirectories>
       <ForcedIncludeFiles>pch.h</ForcedIncludeFiles>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
@@ -157,7 +157,7 @@
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>..\pybind11\include\;..\dll\include\;$(USERPROFILE)\anaconda3\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\pybind11\include\;..\boost\dll\include\;..\boost\config\include\;$(USERPROFILE)\anaconda3\include</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <ForcedIncludeFiles>pch.h</ForcedIncludeFiles>
     </ClCompile>
