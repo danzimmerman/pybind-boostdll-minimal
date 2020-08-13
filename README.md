@@ -1,7 +1,17 @@
 # pybind-boostdll-minimal
 A minimal example using pybind11 with boost/dll
 
-# Setup
+# Resolution
+
+The issue here was that the C++ executable is linked against the Python DLL and needs it to run.
+
+In retrospect, this makes sense.
+
+Copying `python37.dll` from the Anaconda directory to the C++ test app directory solves the issue.
+
+# Notes for Posterity
+
+## Setup
 
 The tests here were run with MS Visual Studio 2019 Community on Windows 10. 
 
