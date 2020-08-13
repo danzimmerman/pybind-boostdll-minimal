@@ -19,8 +19,8 @@ int main(int argc, char* argv[])
 	boost::filesystem::path libFile = libDir / "HelloSayerLib";
 
 	{
-		typedef std::shared_ptr<HelloSayer> hs_create_function_t();
-		boost::function<hs_create_function_t> hscreator;
+		typedef std::shared_ptr<HelloSayer> hs_create_function_t(); // a function signature for the creator function
+		boost::function<hs_create_function_t> hscreator; // a function to hold the imported code from the DLL symbol
 		
         // === GET AND PRINT LIBRARY INFO ===
 		try 

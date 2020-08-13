@@ -1,13 +1,17 @@
 
 import sys
+import os
 
-sys.path.append(r'C:\Code\dan\minimal_examples\HelloSayer\python')
-import HelloSayerLib as hsl
-
-wd = 100
+sys.path.append(os.environ['HELLOSAYER_PYTHON_PATH'])
 
 def header(msg, width=100, char='-'):
     print('\n'+f' {msg} '.center(width, char)+'\n')
+
+wd = 100
+header('HelloSayerLibPythonTests.py trying to load HelloSayerLib')
+header('Using directory specified with system env var \'HELLOSAYER_PYTHON_PATH\'')
+
+import HelloSayerLib as hsl
 
 header('HelloSayerLib loaded from .pyd... Starting Tests')
 
