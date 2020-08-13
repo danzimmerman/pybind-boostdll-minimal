@@ -43,7 +43,7 @@ I'm trying to create a single Windows DLL binary that allows:
  * [`source/HelloSayerLibPythonTests.py`](source/HelloSayerLibPythonTests.py) 
    * Python test application.
 
- * [`source/HelloSayerLibCppTest.cpp](source/HelloSayerLibCppTest.cpp)
+ * [`source/HelloSayerLibCppTest.cpp`](source/HelloSayerLibCppTest.cpp)
    * C++ test application source code.
 
  * [`python`](./python)
