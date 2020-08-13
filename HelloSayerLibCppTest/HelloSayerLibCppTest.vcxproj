@@ -119,12 +119,12 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>..\source;..\pybind11\include;..\..\..\..\external\boost_1_72_0;$(USERPROFILE)\anaconda3\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\source;..\pybind11\include;..\..\..\debug_libs\boost_1_72_0;$(USERPROFILE)\anaconda3\include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(USERPROFILE)\anaconda3\libs;..\..\..\..\external\boost_1_72_0\stage\lib;</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(USERPROFILE)\anaconda3\libs;..\..\..\debug_libs\boost_1_72_0\stage\lib;</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">

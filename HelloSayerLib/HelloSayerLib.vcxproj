@@ -93,14 +93,14 @@
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>..\source;..\pybind11\include;..\..\..\..\external\boost_1_72_0;$(USERPROFILE)\anaconda3\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\source;..\pybind11\include;..\..\..\debug_libs\boost_1_72_0;$(USERPROFILE)\anaconda3\include</AdditionalIncludeDirectories>
       <ForcedIncludeFiles>pch.h</ForcedIncludeFiles>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(USERPROFILE)\anaconda3\libs;..\..\..\..\external\boost_1_72_0\stage\lib;</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(USERPROFILE)\anaconda3\libs;..\..\..\debug_libs\boost_1_72_0\stage\lib;</AdditionalLibraryDirectories>
     </Link>
     <PostBuildEvent>
       <Command>copy /Y $(SolutionDir)$(Platform)\$(Configuration)\$(ProjectName).dll $(SolutionDir)python\$(ProjectName).pyd</Command>

@@ -196,6 +196,97 @@ HelloSayerLib instance docstring is:
 ------------------------------------------ Tests Complete ------------------------------------------
 ```
 
-### Notes
+## Notes
 
 Asked a Stack Overflow question [here](https://stackoverflow.com/questions/63401931/pybind-with-boost-dll-dual-use-dll).
+
+
+## Modifications
+
+At line 100 of `\debug_libs\boost_1_72_0\boost\dll\detail\windows\shared_library_impl.hpp`
+
+Breakpoints on the two `handle_` lines. Seems like both go to the `.c_str()` branch below.
+
+```
+if (sl.has_extension()) {
+      std::cout << "LoadLibraryEXW c_str() branch sl is " << sl << std::endl;
+      std::cout << "sl.c_str() is " << sl.c_str()  << std::endl;
+    for (size_t i = 0; i < sl.size(); i++)
+    {
+        std::cout << sl.c_str()[i] << "|";
+    }
+    std::cout << "\n";
+    std::cout << "mode is " << static_cast<native_mode_t>(mode) << std::endl;
+    handle_ = boost::winapi::LoadLibraryExW(sl.c_str(), 0, static_cast<native_mode_t>(mode));
+} else {
+    std::cout << "LoadLibraryEXW native() branch sl is " << sl << std::endl;
+    handle_ = boost::winapi::LoadLibraryExW((sl.native() + L".").c_str(), 0, static_cast<native_mode_t>(mode));
+}
+
+// LoadLibraryExW method is capable of self loading from program_location() path. No special actions
+// must be taken to allow self loading.
+if (!handle_) {
+    ec = boost::dll::detail::last_error_code();
+}
+```
+
+### With `pybind`
+
+```
+*** getting libinfo on "C:\Code\<user>\minimal_examples\HelloSayer\x64\Debug\HelloSayerLib.dll"
+        Found no symbols in section .textbss
+        Found symbol PyInit_HelloSayerLib in section .text
+        Found no symbols in section .rdata
+        Found no symbols in section .data
+        Found no symbols in section .pdata
+        Found no symbols in section .idata
+        Found symbol CreateHelloSayer in section boostdll
+        Found no symbols in section .msvcjmc
+        Found no symbols in section .tls
+        Found no symbols in section .00cfg
+        Found no symbols in section .rsrc
+        Found no symbols in section .reloc
+
+*** Trying boost::dll::import_alias() to load CreateHelloSayer from "C:\Code\<user>\minimal_examples\HelloSayer\x64\Debug\HelloSayerLib.dll"
+LoadLibraryEXW c_str() branch sl is "C:\Code\<user>\minimal_examples\HelloSayer\x64\Debug\HelloSayerLib.dll"
+sl.c_str() is 000002C3E5EA46B0
+67|58|92|67|111|100|101|92|100|97|110|92|109|105|110|105|109|97|108|95|101|120|97|109|112|108|101|115|92|72|101|108|108|111|83|97|121|101|114|92|120|54|52|92|68|101|98|117|103|92|72|101|108|108|111|83|97|121|101|114|76|105|98|46|100|108|108|
+mode is 0
+
+*** ERROR! Library load attempt threw:
+
+        "boost::dll::shared_library::load() failed: The specified module could not be found"
+```
+
+### Without `pybind`
+
+*** getting libinfo on "C:\Code\<user>\minimal_examples\HelloSayer\x64\Debug\HelloSayerLib.dll"
+        Found no symbols in section .textbss
+        Found no symbols in section .text
+        Found no symbols in section .rdata
+        Found no symbols in section .data
+        Found no symbols in section .pdata
+        Found no symbols in section .idata
+        Found symbol CreateHelloSayer in section boostdll
+        Found no symbols in section .msvcjmc
+        Found no symbols in section .00cfg
+        Found no symbols in section .rsrc
+        Found no symbols in section .reloc
+
+*** Trying boost::dll::import_alias() to load CreateHelloSayer from "C:\Code\<user>\minimal_examples\HelloSayer\x64\Debug\HelloSayerLib.dll"
+LoadLibraryEXW c_str() branch sl is "C:\Code\<user>\minimal_examples\HelloSayer\x64\Debug\HelloSayerLib.dll"
+sl.c_str() is 000001F4709238A0
+67|58|92|67|111|100|101|92|100|97|110|92|109|105|110|105|109|97|108|95|101|120|97|109|112|108|101|115|92|72|101|108|108|111|83|97|121|101|114|92|120|54|52|92|68|101|98|117|103|92|72|101|108|108|111|83|97|121|101|114|76|105|98|46|100|108|108|
+mode is 0
+
+*** Successfully loaded CreateHelloSayer
+
+*** Trying to use HelloSayer()
+
+*** HelloSayer instance hs->sayHello() said
+        "Hello, I'm a HelloSayer running pybind11 & boost::dll tests."
+```
+
+
+
+
