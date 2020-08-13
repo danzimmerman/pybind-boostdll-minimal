@@ -1,7 +1,20 @@
 # pybind-boostdll-minimal
 A minimal example using pybind11 with boost/dll
 
-# Motivation
+# Setup
+
+The tests here were run with MS Visual Studio 2019 Community on Windows 10. 
+
+Boost is provided a folder `external` four directories up from the solution. 
+This is `..\..\..\..\external\boost_1_72_0` on my computers.
+
+Boost built libs (for filesystem, etc) are in
+
+`..\..\..\..\external\boost_1_72_0\stage\lib`
+
+`pybind11` is included as a submodule. Run `git submodule update --init --recursive` to pull it in.
+
+## Motivation
 
 I'm trying to create a single Windows DLL binary that allows:
  * Direct loading and use from C++ [boost/dll](https://github.com/boostorg/dll)
@@ -17,13 +30,21 @@ I'm trying to create a single Windows DLL binary that allows:
  boost::dll::shared_library::load() failed: The specified module could not be found
  ```
  
- # Project Structure
+ ## Project Structure
  
  The functionality exposed to both Python and C++ is a single class, `HelloSayer`, with a single method `sayHello()`.
 
+ ## Source Files
+ [`source/HelloSayerImp.cpp`](source/HelloSayerImp.cpp) - `HelloSayer` implementation and DLL exports using pybind's `PYBIND11_MODULE` and boost/dll's `BOOST_DLL_ALIAS`.
+ [`source/HelloSayerLib.h`](source/HelloSayerLib.h) - Header file defining the `HelloSayer` interface for inclusion in C++ applications that load `HelloSayerLib.dll`.
+ [`source/HelloSayerLibPythonTests.py`](source/HelloSayerLibPythonTests.py) - Python test application.
+ [`source/HelloSayerLibCppTest.cpp](source/HelloSayerLibCppTest.cpp) - C++ test application source code.
+ [`python`](python) - Destination for `HelloSayerLib.pyd` - add the full path as system environment variable `HELLOSAYER_PYTHON_PATH` or modify `HelloSayerLibPythonTests.py` as appropriate.
+
+
  ## C++ Details
   
- In C++ there is an abstract class `HelloSayer` defined in `source/HelloSayer.h` that implements a pure virtual `sayHello()`. This is implemented by the class `HelloSayerImp` in `HelloSayerImp.cpp` which
+ In C++ there is an abstract class `HelloSayer` defined in [`source/HelloSayerLib.h`](source/HelloSayerLib.h) that implements a pure virtual `sayHello()`. This is implemented by the class `HelloSayerImp` in [`source/HelloSayerImp.cpp`](source/HelloSayerImp.cpp) which
  also includes a factory function `Create()` that returns a `std::shared_ptr` to an instance of itself:
  
  ```
@@ -76,14 +97,14 @@ class HelloSayerImp : HelloSayer
  
  A post-build action copies `HelloSayerLib.dll` to `HelloSayer\python\HelloSayerLib.pyd`. 
  
- The solution includes a Python test application `HelloSayerLibPythonTests.py`. 
+ The solution includes a Python test application [`source/HelloSayerLibPythonTests.py`](source/HelloSayerLibPythonTests.py). 
  
  ⚠️To run properly, the user needs to add the system environment variable `HELLOSAYER_PYTHON_PATH` to the full path to `<repodir>\HelloSayer\python`. I tried to do
  this with a pre-build event but I can't get it to work.
  
  You could also use `sys.path.append('path/to/HelloSayerLib.pyd')` but I don't want to hard-code that here.
  
- # Results without `EXPORT_PYTHON` defined, `BOOST_DLL_ALIAS` alone exporting symbols to DLL
+ ## Results without `EXPORT_PYTHON` defined, `BOOST_DLL_ALIAS` alone exporting symbols to DLL
  
  ### Output of `HelloSayerLibCppTest.exe`
  
@@ -124,7 +145,7 @@ Traceback (most recent call last):
 ImportError: dynamic module does not define module export function (PyInit_HelloSayerLib)
  ```
  
-# Results with `#define EXPORT_PYTHON` defined, `BOOST_DLL_ALIAS` and `PYBIND11_MODULE` exporting symbols to DLL
+## Results with `#define EXPORT_PYTHON` defined, `BOOST_DLL_ALIAS` and `PYBIND11_MODULE` exporting symbols to DLL
 ### Output of `HelloSayerLibCppTest.exe`
  
  ```
