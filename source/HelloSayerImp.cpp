@@ -5,7 +5,7 @@
 
 #include <HelloSayerLib.h> // defines the interface of HelloSayer, consisting of a pure virtual sayHello()
 
-#define EXPORT_PYTHON
+//#define EXPORT_PYTHON
 
 namespace py = pybind11;
 

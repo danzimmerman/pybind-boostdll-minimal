@@ -148,7 +148,7 @@ class HelloSayerImp : HelloSayer
 -------------- Using directory specified with system env var 'HELLOSAYER_PYTHON_PATH' --------------
 
 Traceback (most recent call last):
-  File "C:\Code\dan\minimal_examples\HelloSayer\source\HelloSayerLibPythonTests.py", line 14, in <module>
+  File "<projectpath>\HelloSayer\source\HelloSayerLibPythonTests.py", line 14, in <module>
     import HelloSayerLib as hsl
 ImportError: dynamic module does not define module export function (PyInit_HelloSayerLib)
  ```
