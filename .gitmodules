@@ -1,3 +1,9 @@
 [submodule "pybind11"]
 	path = pybind11
 	url = https://github.com/pybind/pybind11.git
+[submodule "boost/config"]
+	path = boost/config
+	url = https://github.com/boostorg/config.git
+[submodule "boost/dll"]
+	path = boost/dll
+	url = https://github.com/boostorg/dll.git
