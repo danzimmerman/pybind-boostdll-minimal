@@ -5,7 +5,7 @@
 
 #include <HelloSayerLib.h> // defines the interface of HelloSayer, consisting of a pure virtual sayHello()
 
-//#define EXPORT_PYTHON
+#define EXPORT_PYTHON
 
 namespace py = pybind11;
 
@@ -23,6 +23,8 @@ class HelloSayerImp : HelloSayer
 		}
 };
 
+BOOST_DLL_ALIAS(HelloSayerImp::Create, CreateHelloSayer);
+
 #ifdef EXPORT_PYTHON
 
 PYBIND11_MODULE(HelloSayerLib, m)
@@ -30,11 +32,10 @@ PYBIND11_MODULE(HelloSayerLib, m)
 	m.doc() = "pybind11 & boost::dll test Python module"; // optional module docstring
 
 	py::class_<HelloSayerImp, std::shared_ptr<HelloSayerImp>>(m, "HelloSayer")
-		.def(py::init(&HelloSayerImp::Create))		
+		.def(py::init(&HelloSayerImp::Create))
 		.def("sayHello", &HelloSayerImp::sayHello);
 }
 
 #endif
 
-BOOST_DLL_ALIAS(HelloSayerImp::Create, CreateHelloSayer);
 

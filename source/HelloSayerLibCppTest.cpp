@@ -15,8 +15,8 @@ int main(int argc, char* argv[])
 
 	boost::filesystem::path libDir = boost::filesystem::path(exePath).parent_path();
 	std::cout << "\n*** boost::dll test HelloSayerLibCppTest.exe running from " << libDir << std::endl;
-
-	boost::filesystem::path libFile = libDir / "HelloSayerLib";
+	std::string libFileStr = "HelloSayerLib";
+	boost::filesystem::path libFile = libDir / libFileStr;
 
 	{
 		typedef std::shared_ptr<HelloSayer> hs_create_function_t(); // a function signature for the creator function
@@ -25,8 +25,14 @@ int main(int argc, char* argv[])
         // === GET AND PRINT LIBRARY INFO ===
 		try 
 		{
-			std::cout << "\n*** Reading sections and symbols from shared library " << libFile << "\n"<< std::endl;
-			boost::dll::library_info libinfo(libDir / "HelloSayerLib.dll");
+			std::cout << "\n*** Reading sections and symbols from shared library " << libFile << std::endl;
+			boost::filesystem::path libSuffix = boost::dll::shared_library::suffix();
+
+			std::cout << "\n*** Shared library suffix is " << libSuffix.generic_string() << std::endl;
+			std::cout << "\n*** Shared library suffix as boost::filesystem::path is " << libSuffix << std::endl;
+			boost::filesystem::path libFileExt = libDir / (libFileStr + libSuffix.generic_string());
+			std::cout << "\n*** getting libinfo on " << libFileExt << std::endl;
+			boost::dll::library_info libinfo(libFileExt);
 			std::vector<std::string> sections = libinfo.sections();
 
 			for (auto& section : sections)
