@@ -42,7 +42,7 @@ I'm trying to create a single Windows DLL binary that allows:
 
  [`source/HelloSayerLibCppTest.cpp](source/HelloSayerLibCppTest.cpp) - C++ test application source code.
 
- [`python`](python) - Destination for `HelloSayerLib.pyd` - add the full path as system environment variable `HELLOSAYER_PYTHON_PATH` or modify `HelloSayerLibPythonTests.py` as appropriate.
+ [`python`](./python) - Destination for `HelloSayerLib.pyd` - add the full path as system environment variable `HELLOSAYER_PYTHON_PATH` or modify `HelloSayerLibPythonTests.py` as appropriate.
 
 
  ## C++ Details
