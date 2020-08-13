@@ -34,15 +34,20 @@ I'm trying to create a single Windows DLL binary that allows:
  
  The functionality exposed to both Python and C++ is a single class, `HelloSayer`, with a single method `sayHello()`.
 
- [`source/HelloSayerImp.cpp`](source/HelloSayerImp.cpp) - `HelloSayer` implementation and DLL exports using pybind's `PYBIND11_MODULE` and boost/dll's `BOOST_DLL_ALIAS`.
+ * [`source/HelloSayerImp.cpp`](source/HelloSayerImp.cpp) 
+   * `HelloSayer` implementation and DLL exports using pybind's `PYBIND11_MODULE` and boost/dll's `BOOST_DLL_ALIAS`.
 
- [`source/HelloSayerLib.h`](source/HelloSayerLib.h) - Header file defining the `HelloSayer` interface for inclusion in C++ applications that load `HelloSayerLib.dll`.
+ * [`source/HelloSayerLib.h`](source/HelloSayerLib.h)
+   * Header file defining the `HelloSayer` interface for inclusion in C++ applications that load `HelloSayerLib.dll`.
 
- [`source/HelloSayerLibPythonTests.py`](source/HelloSayerLibPythonTests.py) - Python test application.
+ * [`source/HelloSayerLibPythonTests.py`](source/HelloSayerLibPythonTests.py) 
+   * Python test application.
 
- [`source/HelloSayerLibCppTest.cpp](source/HelloSayerLibCppTest.cpp) - C++ test application source code.
+ * [`source/HelloSayerLibCppTest.cpp](source/HelloSayerLibCppTest.cpp)
+   * C++ test application source code.
 
- [`python`](./python) - Destination for `HelloSayerLib.pyd` - add the full path as system environment variable `HELLOSAYER_PYTHON_PATH` or modify `HelloSayerLibPythonTests.py` as appropriate.
+ * [`python`](./python)
+   * Destination for `HelloSayerLib.pyd` - add the full path as system environment variable `HELLOSAYER_PYTHON_PATH` or modify `HelloSayerLibPythonTests.py` as appropriate.
 
 
  ## C++ Details
