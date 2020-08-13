@@ -260,6 +260,7 @@ mode is 0
 
 ### Without `pybind`
 
+```
 *** getting libinfo on "C:\Code\<user>\minimal_examples\HelloSayer\x64\Debug\HelloSayerLib.dll"
         Found no symbols in section .textbss
         Found no symbols in section .text
