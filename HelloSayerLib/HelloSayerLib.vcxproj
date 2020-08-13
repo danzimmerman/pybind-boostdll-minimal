@@ -105,6 +105,9 @@
     <PostBuildEvent>
       <Command>copy /Y $(SolutionDir)$(Platform)\$(Configuration)\$(ProjectName).dll $(SolutionDir)python\$(ProjectName).pyd</Command>
     </PostBuildEvent>
+    <PreBuildEvent>
+      <Command>copy $(USERPROFILE)\anaconda3\python37.dll $(SolutionDir)$(Platform)\$(Configuration)\</Command>
+    </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -172,8 +175,7 @@
       <Command>copy /Y $(SolutionDir)$(Platform)\$(Configuration)\$(ProjectName).dll $(SolutionDir)python\$(ProjectName).pyd</Command>
     </PostBuildEvent>
     <PreBuildEvent>
-      <Command>
-      </Command>
+      <Command>copy $(USERPROFILE)\anaconda3\python37.dll $(SolutionDir)$(Platform)\$(Configuration)\</Command>
     </PreBuildEvent>
     <PreBuildEvent>
       <Message>
