@@ -16,7 +16,12 @@ int main(int argc, char* argv[])
 	boost::filesystem::path libDir = boost::filesystem::path(exePath).parent_path();
 	std::cout << "\n*** boost::dll test HelloSayerLibCppTest.exe running from " << libDir << std::endl;
 	std::string libFileStr = "HelloSayerLib";
+
 	boost::filesystem::path libFile = libDir / libFileStr;
+	boost::filesystem::path libSuffix = boost::dll::shared_library::suffix();
+	// Trying to skip boost::dll::load_mode::append_decorations to see what happens
+	// Something is going on in the append_decorations machinery (maybe related to wchar/char issues?) 
+ 	boost::filesystem::path libFileExt = libDir / (libFileStr + libSuffix.generic_string()); // library file with extension. .dll on windows
 
 	{
 		typedef std::shared_ptr<HelloSayer> hs_create_function_t(); // a function signature for the creator function
@@ -26,11 +31,9 @@ int main(int argc, char* argv[])
 		try 
 		{
 			std::cout << "\n*** Reading sections and symbols from shared library " << libFile << std::endl;
-			boost::filesystem::path libSuffix = boost::dll::shared_library::suffix();
 
 			std::cout << "\n*** Shared library suffix is " << libSuffix.generic_string() << std::endl;
 			std::cout << "\n*** Shared library suffix as boost::filesystem::path is " << libSuffix << std::endl;
-			boost::filesystem::path libFileExt = libDir / (libFileStr + libSuffix.generic_string());
 			std::cout << "\n*** getting libinfo on " << libFileExt << std::endl;
 			boost::dll::library_info libinfo(libFileExt);
 			std::vector<std::string> sections = libinfo.sections();
@@ -65,11 +68,15 @@ int main(int argc, char* argv[])
 			std::string createFunctionSym = "CreateHelloSayer";
 			std::string libFileStr = libFile.generic_string();
 
-			std::cout << "\n*** Trying boost::dll::import_alias() to load " << createFunctionSym <<  " from " << libFileStr << std::endl;
+			std::cout << "\n*** Trying boost::dll::import_alias() to load " << createFunctionSym <<  " from " << libFileExt << std::endl;
+			
+            // I am no longer using boost::dll::load_mode::append_decorations, but 
+			// instead I'm building the library file name with the extension.
+			// Debugger showed a Microsoft C++ Exception, and there was unreadable data in the library path name.
+			// It was hard to follow, but seems like maybe it had something to do with WCHAR/CHAR issues. 
 			hscreator = boost::dll::import_alias<hs_create_function_t>(
-				libFile,
-				createFunctionSym,
-				boost::dll::load_mode::append_decorations
+				libFileExt,
+				createFunctionSym
 				);
 			std::cout << "\n*** Successfully loaded " << createFunctionSym << std::endl;
 		}
