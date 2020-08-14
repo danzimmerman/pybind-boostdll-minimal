@@ -5,7 +5,7 @@
 
 #include <HelloSayerLib.h> // defines the interface of HelloSayer, consisting of a pure virtual sayHello()
 
-#define EXPORT_PYTHON
+#define EXPORT_PYTHON //If EXPORT_PYTHON is defined, the C++ DLL will depend on a python DLL. Copy python37.dll or whatever is in anaconda3 to the output directory!
 
 namespace py = pybind11;
 

@@ -1,5 +1,9 @@
 #pragma once
 
+
+#define EXPORT_PYTHON
+
+
 class HelloSayer
 {
 public:
