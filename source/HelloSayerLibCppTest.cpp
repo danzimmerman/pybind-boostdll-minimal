@@ -94,6 +94,10 @@ int main(int argc, char* argv[])
 			std::shared_ptr<HelloSayer> hs = hscreator();
 			std::string msg = hs->sayHello();
 			std::cout << "\n*** HelloSayer instance hs->sayHello() said \n\t\"" << msg << "\"" << std::endl;
+			msg = hs->getVersionInfo();
+			std::cout << "\n*** HelloSayer instance hs->getVersionInfo() said \n\t\"" << msg << "\"" << std::endl;
+
+
 		}
 		catch (std::exception& ex)
 		{

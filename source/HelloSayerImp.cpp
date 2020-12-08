@@ -17,10 +17,19 @@ class HelloSayerImp : HelloSayer
 			return "Hello, I'm a HelloSayer running pybind11 & boost::dll tests.";
 		}
 
+		std::string getVersionInfo()
+		{
+			std::string ver(HelloSayerVersionInfo::versionString);
+			std::string company(HelloSayerVersionInfo::companyName);
+			std::string project(HelloSayerVersionInfo::projectName);
+			return company + " " + project + ", Version " + ver;
+		}
+
 		static std::shared_ptr<HelloSayerImp> Create()
 		{
 			return std::shared_ptr<HelloSayerImp>(new HelloSayerImp);
 		}
+
 };
 
 BOOST_DLL_ALIAS(HelloSayerImp::Create, CreateHelloSayer);
