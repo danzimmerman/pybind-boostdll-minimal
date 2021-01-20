@@ -9,6 +9,31 @@
 
 #include <HelloSayerLib.h>
 
+class HelloSayerWrapper
+{
+public:
+	std::string getVer()
+	{
+		return _hsayer->getVersionInfo();
+	}
+	size_t getRefCount()
+	{
+		return _hsayer.use_count();
+	}
+	void registerHelloSayer(std::shared_ptr<HelloSayer> sptr)
+	{
+		_hsayer = sptr;
+	};
+	void dontDoThis()
+	{
+		_hsayer.reset();
+	}
+
+protected:
+	std::shared_ptr<HelloSayer> _hsayer;
+
+};
+
 int main(int argc, char* argv[])
 {
 	std::string exePath = argv[0];
@@ -103,6 +128,52 @@ int main(int argc, char* argv[])
 		{
 			std::cerr << "\n*** ERROR! Using library threw:\n" << std::endl;
 			std::cerr << "\t\"" << ex.what() << "\"" << std::endl;
+		}
+
+		// === TRY TO USE IT OUT OF SCOPE ===
+
+		try
+		{
+			std::cout << "\n*** Getting shared_ptr to a HelloSayer in another scope" << std::endl;
+			HelloSayerWrapper hswrap;
+			{
+				std::shared_ptr<HelloSayer> scoped_hs;
+				scoped_hs = hscreator();
+				std::string msg = scoped_hs->sayHello();
+				std::cout << "\n*** HelloSayer instance scoped_hs->sayHello() still in scope said \n\t\"" << msg << "\"" << std::endl;
+				std::cout << "\n*** Registering HelloSayer in wrapper..." << std::endl;
+				std::cout << "\n*** In scope, before registering hswrap.getRefCount() " << hswrap.getRefCount() << std::endl;
+				hswrap.registerHelloSayer(scoped_hs);
+				std::cout << "\n*** In scope, after registering hswrap.getRefCount() " << hswrap.getRefCount() << std::endl;
+
+
+			}
+			std::cout << "\n*** Out of scope for scoped_hs, hswrap.getRefCount() " << hswrap.getRefCount() << std::endl;
+			std::string msg = hswrap.getVer(); 
+			std::cout << "\n*** HelloSayer instance hswrap.getVer() with scoped_hs gone out of scope said \n\t\"" << msg << "\"" << std::endl;
+			hswrap.dontDoThis();
+			std::cout << "\n*** called hswrap.dontDoThis() to reset internal smart ptr, hswrap.getRefCount() " << hswrap.getRefCount() << std::endl;
+
+			bool do_bad_thing = true;
+			if (do_bad_thing)
+			{
+				msg = hswrap.getVer(); // this should be fucked
+				std::cout << "\n*** HelloSayer instance hswrap.getVer() after reset with dontDoThis() said \n\t\"" << msg << "\"" << std::endl;
+			}
+			else
+			{
+				std::cout << "\n*** avoided bad thing, finished";
+			}
+	
+		}
+		catch (std::exception& ex)
+		{
+			std::cerr << "\n*** ERROR! Using library threw:\n" << std::endl;
+			std::cerr << "\t\"" << ex.what() << "\"" << std::endl;
+		}
+		catch (...)
+		{
+			std::cerr << "\n*** ERROR! Unspecified." << std::endl;
 		}
 
 	}
