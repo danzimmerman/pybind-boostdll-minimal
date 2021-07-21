@@ -135,14 +135,14 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>..\source;..\pybind11\include;..\..\..\..\external\boost_1_72_0;$(USERPROFILE)\anaconda3\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\source;$(USERPROFILE)\miniconda3\envs\noetic\Library\include;$(USERPROFILE)\miniconda3\envs\noetic\include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(USERPROFILE)\anaconda3\libs;..\..\..\..\external\boost_1_72_0\stage\lib;</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(USERPROFILE)\miniconda3\libs;$(USERPROFILE)\miniconda3\envs\noetic\Library\lib</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
