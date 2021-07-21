@@ -34,8 +34,10 @@ protected:
 
 };
 
+
 int main(int argc, char* argv[])
 {
+	
 	std::string exePath = argv[0];
 
 	boost::filesystem::path libDir = boost::filesystem::path(exePath).parent_path();
