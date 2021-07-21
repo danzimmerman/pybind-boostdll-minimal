@@ -48,7 +48,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>ClangCL</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
@@ -84,6 +84,16 @@
     <LinkIncremental>false</LinkIncremental>
     <TargetExt>.dll</TargetExt>
   </PropertyGroup>
+  <PropertyGroup Label="Vcpkg" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <VcpkgEnabled>false</VcpkgEnabled>
+    <VcpkgManifestInstall>false</VcpkgManifestInstall>
+    <VcpkgAutoLink>false</VcpkgAutoLink>
+  </PropertyGroup>
+  <PropertyGroup Label="Vcpkg" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <VcpkgEnabled>false</VcpkgEnabled>
+    <VcpkgManifestInstall>false</VcpkgManifestInstall>
+    <VcpkgAutoLink>false</VcpkgAutoLink>
+  </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
       <PrecompiledHeader>Use</PrecompiledHeader>
@@ -93,7 +103,7 @@
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>..\source;..\..\..\..\external\boost_1_72_0\;$(USERPROFILE)\miniconda3\envs\npe\Lib\site-packages\pybind11\include;$(USERPROFILE)\miniconda3\envs\npe\include;</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\source;$(USERPROFILE)\miniconda3\envs\noetic\Library\include;$(USERPROFILE)\miniconda3\envs\noetic\include</AdditionalIncludeDirectories>
       <ForcedIncludeFiles>pch.h</ForcedIncludeFiles>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <AdditionalOptions>/DHAVE_SNPRINTF %(AdditionalOptions)</AdditionalOptions>
@@ -101,7 +111,7 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(USERPROFILE)\miniconda3\libs;..\..\..\..\external\boost_1_72_0\stage\lib;</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(USERPROFILE)\miniconda3\libs;$(USERPROFILE)\miniconda3\envs\noetic\Library\lib</AdditionalLibraryDirectories>
     </Link>
     <PostBuildEvent>
       <Command>git branch --show-current &gt; _gitbranch.txt

@@ -84,9 +84,9 @@ int main(int argc, char* argv[])
 		}
 		catch (std::exception& ex)
 		{
-			std::cerr << "\n*** ERROR! Getting library info threw:\n" << std::endl;
+			std::cerr << "\n*** WARNING! Getting library info threw:\n" << std::endl;
 			std::cerr << "\t\"" << ex.what() << "\"" << std::endl;
-			return EXIT_FAILURE;
+			//return EXIT_FAILURE;
 		}
 
 		// === NOW LOAD THE DLL AND TRY TO USE THE FUNCTION ===
