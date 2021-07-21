@@ -156,7 +156,7 @@ int main(int argc, char* argv[])
 			hswrap.dontDoThis();
 			std::cout << "\n*** called hswrap.dontDoThis() to reset internal smart ptr, hswrap.getRefCount() " << hswrap.getRefCount() << std::endl;
 
-			bool do_bad_thing = true;
+			bool do_bad_thing = false;
 			if (do_bad_thing)
 			{
 				msg = hswrap.getVer(); // this should be fucked

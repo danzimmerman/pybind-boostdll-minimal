@@ -185,8 +185,8 @@ del _gitbranch.txt</Command>
 set /P GIT_BRANCH=&lt;_gitbranch.txt
 echo "Copying HelloSayer.dll from git branch %GIT_BRANCH% to python .pyd file..."
 copy /Y $(SolutionDir)$(Platform)\$(Configuration)\$(ProjectName).dll $(SolutionDir)python\$(ProjectName)-%GIT_BRANCH:/=-%.pyd 
-echo "Copying python37.dll to C++ target directory..."
-copy $(USERPROFILE)\anaconda3\envs\npe\python37.dll $(SolutionDir)$(Platform)\$(Configuration)
+echo "Copying python38.dll to C++ target directory..."
+copy $(USERPROFILE)\miniconda3\envs\noetic\python38.dll $(SolutionDir)$(Platform)\$(Configuration)
 del _gitbranch.txt</Command>
     </PostBuildEvent>
     <PreBuildEvent>

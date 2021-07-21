@@ -1,11 +1,11 @@
 #include <iostream>
 #include <pybind11/pybind11.h>
 #include <pybind11/stl.h>
-#include <boost/dll/alias.hpp> // using system-level boost 1.7.2, in ..\..\..\..\external\boost_1_72_0. 
+#include <boost/dll/alias.hpp> // using noetic boost
 
 #include <HelloSayerLib.h> // defines the interface of HelloSayer, consisting of a pure virtual sayHello()
 
-//#define EXPORT_PYTHON //If EXPORT_PYTHON is defined, the C++ DLL will depend on a python DLL. Copy python37.dll or whatever is in anaconda3 to the output directory!
+#define EXPORT_PYTHON //If EXPORT_PYTHON is defined, the C++ DLL will depend on a python DLL. Copy python38.dll or whatever is in miniconda3 to the output directory!
 
 namespace py = pybind11;
 
